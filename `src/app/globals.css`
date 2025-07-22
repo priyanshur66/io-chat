@@ -1,0 +1,83 @@
+```javascript
+// src/app/globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Styles */
+body {
+  @apply bg-white text-black;
+}
+
+/* Dark Mode Styles */
+.dark body {
+  @apply bg-gray-900 text-white;
+}
+
+.dark a {
+  @apply text-blue-500;
+}
+
+.dark a:hover {
+  @apply text-blue-700;
+}
+
+/* Other global styles can be added here */
+
+/* Error handling for dark mode */
+/* Since we are using Tailwind CSS, we don't need to handle errors explicitly.
+   However, we can add a fallback in case the dark class is not applied correctly. */
+.dark body {
+  /* Fallback background color */
+  background-color: #333;
+  /* Fallback text color */
+  color: #fff;
+}
+```
+
+```javascript
+// src/app/index.js (example usage)
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './globals.css';
+
+// Enable dark mode
+// document.body.classList.add('dark');
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```
+
+```javascript
+// src/app/App.js (example usage)
+import React, { useState, useEffect } from 'react';
+
+function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  return (
+    <div>
+      <button onClick={toggleDarkMode}>Toggle Dark Mode</button>
+    </div>
+  );
+}
+
+export default App;
+```
