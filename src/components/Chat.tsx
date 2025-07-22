@@ -53,6 +53,7 @@ export default function Chat() {
       const response = await sendMessage(newMessages);
       setMessages([...newMessages, { role: 'assistant', content: response }]);
     } catch (error) {
+      console.error('Chat error:', error);
       setMessages([...newMessages, { 
         role: 'assistant', 
         content: 'Sorry, I encountered an error. Please check your API key and try again.' 
