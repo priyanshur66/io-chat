@@ -1,0 +1,26 @@
+```typescript
+// src/components/Chat.tsx
+import React from 'react';
+import { useMode } from '../app/layout';
+
+const Chat = () => {
+  // Use the useMode hook to get the current mode and toggleMode function
+  const { mode, toggleMode } = useMode();
+
+  return (
+    <div style={{ backgroundColor: mode === 'light' ? '#f0f0f0' : '#333' }}>
+      <h1>Chat Component</h1>
+      <p>Current mode: {mode}</p>
+      {/* 
+        Add a toggle button to switch between modes.
+        The button's text is updated based on the current mode.
+      */}
+      <button onClick={toggleMode}>
+        {mode === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+      </button>
+    </div>
+  );
+};
+
+export default Chat;
+```

@@ -1,0 +1,66 @@
+```css
+/* src/app/globals.css */
+
+/* Import necessary dependencies */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Define dark mode styles using the 'dark' class provided by Tailwind CSS */
+.dark {
+  /* Set the background color to a dark color */
+  background-color: #1a1d23;
+
+  /* Set the text color to a light color */
+  color: #fff;
+
+  /* Update the link color to a lighter color */
+  a {
+    color: #66d9ef;
+  }
+
+  /* Update the link hover color to a darker color */
+  a:hover {
+    color: #44a0e6;
+  }
+}
+
+/* Define styles for the rest of the application */
+body {
+  /* Set the font family to a sans-serif font */
+  font-family: Arial, sans-serif;
+
+  /* Set the font size to 16px */
+  font-size: 16px;
+
+  /* Set the line height to 1.5 */
+  line-height: 1.5;
+}
+
+/* Define styles for headings */
+h1, h2, h3, h4, h5, h6 {
+  /* Set the font weight to bold */
+  font-weight: bold;
+
+  /* Set the color to a dark color */
+  color: #333;
+}
+
+/* Define styles for paragraphs */
+p {
+  /* Set the font size to 16px */
+  font-size: 16px;
+
+  /* Set the line height to 1.5 */
+  line-height: 1.5;
+}
+```
+
+Note: This code assumes that you have already installed Tailwind CSS in your project and have configured it to use the `dark` class for dark mode styles. If you haven't installed Tailwind CSS, you can do so by running the command `npm install tailwindcss` or `yarn add tailwindcss` in your terminal. You will also need to configure Tailwind CSS to use the `dark` class by adding the following code to your `tailwind.config.js` file:
+```javascript
+module.exports = {
+  // ...
+  darkMode: 'class',
+  // ...
+}
+```

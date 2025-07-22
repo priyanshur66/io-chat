@@ -1,0 +1,21 @@
+```typescript
+// Import necessary dependencies
+import type { Config } from 'tailwindcss';
+
+// Define the Tailwind CSS configuration
+const config: Config = {
+  // Enable dark mode classes
+  darkMode: 'class',
+  // Other configurations...
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+// Export the configuration
+module.exports = config;
+```

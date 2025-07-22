@@ -1,0 +1,59 @@
+```typescript
+// src/app/layout.tsx
+import React, { useState, createContext, useContext } from 'react';
+
+// Create a context to store the current mode
+interface ModeContextProps {
+  children: React.ReactNode;
+}
+
+interface Mode {
+  mode: 'light' | 'dark';
+  toggleMode: () => void;
+}
+
+const ModeContext = createContext<Mode>({ mode: 'light', toggleMode: () => {} });
+
+const ModeProvider = ({ children }: ModeContextProps) => {
+  // Use the useState hook to store the current mode
+  const [mode, setMode] = useState<'light' | 'dark'>('light');
+
+  // Function to toggle the mode
+  const toggleMode = () => {
+    setMode(mode === 'light' ? 'dark' : 'light');
+  };
+
+  // Provide the mode and toggleMode function to the context
+  return (
+    <ModeContext.Provider value={{ mode, toggleMode }}>
+      {children}
+    </ModeContext.Provider>
+  );
+};
+
+// Custom hook to use the ModeContext
+const useMode = () => {
+  const context = useContext(ModeContext);
+  if (!context) {
+    throw new Error('useMode must be used within a ModeProvider');
+  }
+  return context;
+};
+
+// Layout component that uses the ModeContext
+const Layout = ({ children }: ModeContextProps) => {
+  // Use the useMode hook to get the current mode and toggleMode function
+  const { mode } = useMode();
+
+  // Apply dark mode classes conditionally based on the current mode
+  const className = mode === 'light' ? 'light-mode' : 'dark-mode';
+
+  return (
+    <div className={className}>
+      {children}
+    </div>
+  );
+};
+
+export { ModeProvider, useMode, Layout };
+```
