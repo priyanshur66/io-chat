@@ -1,0 +1,28 @@
+```typescript
+// Import the required modules
+const defaultTheme = require('tailwindcss/defaultTheme');
+
+// Define the module exports
+module.exports = {
+  // Enable dark mode by setting darkMode to 'class'
+  darkMode: 'class',
+  // Specify the content that should be processed by Tailwind CSS
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+  ],
+  // Define the theme configuration
+  theme: {
+    // Extend the default theme with custom configurations
+    extend: {
+      // Add custom colors, fonts, or other theme configurations as needed
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
+    },
+  },
+  // Specify the plugins to be used
+  plugins: [
+    // Add plugins as needed
+  ],
+};
+```

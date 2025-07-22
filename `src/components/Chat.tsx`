@@ -1,0 +1,104 @@
+```typescript
+// src/components/Chat.tsx
+import React, { useContext } from 'react';
+import { DarkModeContext } from '../contexts/DarkModeContext';
+
+const Chat = () => {
+  // Access the DarkModeContext to get the current dark mode state and toggle function
+  const darkModeContext = useContext(DarkModeContext);
+
+  // Check if the DarkModeContext is provided
+  if (!darkModeContext) {
+    throw new Error('DarkModeContext is not provided');
+  }
+
+  // Destructure the dark mode state and toggle function from the context
+  const { isDarkMode, toggleDarkMode } = darkModeContext;
+
+  return (
+    // Conditionally apply dark mode classes based on the dark mode state
+    <div className={`bg-white dark:bg-gray-800 text-gray-800 dark:text-white p-4`}>
+      <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Chat Component</h1>
+      {/* 
+        Add a toggle button to switch between light and dark modes
+        The button's text is conditionally updated based on the current dark mode state
+      */}
+      <button 
+        onClick={toggleDarkMode} 
+        className={`bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded`}
+      >
+        {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      </button>
+    </div>
+  );
+};
+
+export default Chat;
+```
+
+```typescript
+// src/app/layout.tsx
+import React from 'react';
+import { DarkModeProvider } from '../contexts/DarkModeContext';
+import Chat from '../components/Chat';
+
+const Layout = () => {
+  return (
+    <DarkModeProvider>
+      <div className="min-h-screen dark:bg-gray-800">
+        <Chat />
+      </div>
+    </DarkModeProvider>
+  );
+};
+
+export default Layout;
+```
+
+```typescript
+// src/contexts/DarkModeContext.ts (no changes)
+import { createContext, useState, useEffect } from 'react';
+
+// Create a new context to manage dark mode state
+interface DarkModeContextProps {
+  children: React.ReactNode;
+}
+
+interface DarkModeState {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+const DarkModeContext = createContext<DarkModeState | null>(null);
+
+const DarkModeProvider = ({ children }: DarkModeContextProps) => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Load dark mode state from local storage on mount
+  useEffect(() => {
+    const storedDarkMode = localStorage.getItem('isDarkMode');
+    if (storedDarkMode !== null) {
+      setIsDarkMode(JSON.parse(storedDarkMode));
+    }
+  }, []);
+
+  // Save dark mode state to local storage on change
+  useEffect(() => {
+    localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+    // Update the document body class to apply dark mode styles
+    document.body.classList.toggle('dark', isDarkMode);
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  return (
+    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+      {children}
+    </DarkModeContext.Provider>
+  );
+};
+
+export { DarkModeProvider, DarkModeContext };
+```
